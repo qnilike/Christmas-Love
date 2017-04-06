@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <title>幽灵按钮</title>
+    <style type="text/css">
+        *{margin: 0;padding: 0}
+        body{background: #333;}
+        .box{
+            width:800px;
+            height: 280px;
+            margin: 50px auto;
+            position: relative;
+        }
+        .box .link{
+            width: 205px;
+            height: 280px;
+            float:left;
+            margin: 0 20px;
+        }
+        .link .icon{
+            display: inline-block;
+            width: 100%;
+            height: 190px;
+            transition:all .5s ease-out;
+            -webkit-transition:all .5s ease-out;
+            -moz-transition:all .5s ease-out;
+        }
+        .link .icon:hover{
+            transform:rotate(360deg) scale(1.2);
+            -webkit-transform:rotate(360deg) scale(1.2);
+            -moz-transform:rotate(360deg) scale(1.2);
+        }
+        .link-miss .icon{
+            background:url("images/mission.png") no-repeat center center;
+        }
+        .link-play .icon{
+            background:url("images/play.png") no-repeat center center;
+        }
+        .link-touch .icon{
+            background:url("images/touch.png") no-repeat center center;
+        }
+        .button{
+            display:block;
+            box-sizing:border-box;
+            position: relative;
+            width: 180px;
+            height: 50px;
+            line-height: 50px;
+            text-decoration: none;
+            color:#2dcb70;
+            font-family: Arial;
+            font-weight: bolder;
+            border:1px solid rgba(255,255,255,0.6);
+            padding-left: 20px;
+            margin: 0 auto;
+            background: url("images/allow.png") no-repeat 130px center;
+            transition:all .4s ease;
+        }
+        .button:hover{
+            border:1px solid rgba(255,255,255,16);
+            background-position: 140px center;
+        }
+        .button .line{
+            display: block;
+            position: absolute;
+            background: none;
+        }
+        .button:hover .line{
+            background: #fff;
+        }
+        .button .line-top{
+            width: 0px;
+            height: 1px;
+            left:-110px;
+            top:-1px;
+            transition:all .2s linear;
+        }
+        .button:hover .line-top{
+            width: 180px;
+            left:-1px;
+        }
+        .button .line-bottom{
+            width: 0px;
+            height: 1px;
+            position: absolute;
+            right: -110px;
+            top:48px;
+            transition:all .2s linear;
+        }
+        .button:hover .line-bottom{
+            width: 180px;
+            right: -1px;
+        }
+        .button .line-right{
+            width: 1px;
+            height: 0px;
+            position: absolute;
+            left: 178px;
+            top:-110px;
+            transition:all .2s linear;
+        }
+        .button:hover .line-right{
+            height: 100%;
+            top:1px;
+        }
+        .button .line-left{
+            width: 1px;
+            height: 0px;
+            position: absolute;
+            right: 178px;
+            top:110px;
+            transition:all .2s linear;
+        }
+        .button:hover .line-left{
+            height: 100%;
+            top:1px;
+        }
+        .tip{
+            position: absolute;
+            padding:0 14px;
+            height: 35px;
+            line-height: 35px;
+            background: #2dcb70;
+            color: #fff;
+            font-size: 18px;
+            margin:0 auto;
+            border-radius: 3px;
+            top:100px;
+            opacity:0;
+        }
+        .tip em{
+            font-style: normal;
+
+        }
+        .tip span{
+            display: block;
+            width: 0;
+            height: 0;
+            overflow: hidden;
+            border:7px solid transparent;
+            border-top-color:#2dcb70;
+            position: absolute;
+            top:35px;
+            left:50%;
+            margin-left:-3px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="link link-miss">
+            <span class="icon"></span>
+            <a href="#" class="button" data="my mission is clear">
+                <span class="line line-top"></span>
+                <span class="line line-right"></span>
+                <span class="line line-bottom"></span>
+                <span class="line line-left"></span>
+                MISSION
+            </a>
+        </div>
+
+        <div class="link link-play">
+            <span class="icon"></span>
+            <a href="#" class="button" data="this is my playGroup">
+                <span class="line line-top"></span>
+                <span class="line line-right"></span>
+                <span class="line line-bottom"></span>
+                <span class="line line-left"></span>
+                PLAY
+            </a>
+        </div>
+
+        <div class="link link-touch">
+            <span class="icon"></span>
+            <a href="#" class="button" data="my touch is touch">
+                <span class="line line-top"></span>
+                <span class="line line-right"></span>
+                <span class="line line-bottom"></span>
+                <span class="line line-left"></span>
+                TOUCH
+            </a>
+        </div>
+        <div class="tip">
+            <em></em>
+            <span></span>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $(".link .button").hover(function(){
+                var title=$(this).attr("data");
+                $('.tip em').text(title);
+                var pos=$(this).position().left+10;
+                var dis=($('.tip').outerWidth()-$(this).outerWidth())/2;
+                var l=pos-dis;
+                $('.tip').stop(false,true).css({'left':l+'px'}).animate({
+                    top: 145,
+                    opacity:1},
+                    300, function() {
+                    /* stuff to do after animation is complete */
+                });
+            },function(){
+                $('.tip').stop().animate({
+                    top: 100,
+                    opacity:0},
+                    300, function() {
+                    /* stuff to do after animation is complete */
+                });  
+            });
+        });
+    </script>
+</body>
+</html>
